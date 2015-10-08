@@ -33,7 +33,6 @@ public class KlondikeTest {
   public void shouldPlaceAllCardsInSevenPiles() {
     shuffledDeck.initialDeal();
 
-    System.out.println(piles.toString());
     assertNotNull(piles.getPile(0));
     assertNotNull(piles.getPile(1));
     assertNotNull(piles.getPile(2));
@@ -45,15 +44,7 @@ public class KlondikeTest {
 
   @Test
   public void shouldPlaceExactNumberOfCardsInSevenPiles() {
-    shuffledDeck.initialDeal();
-
-    assertNotNull(piles.getPile(0));
-    assertNotNull(piles.getPile(1));
-    assertNotNull(piles.getPile(2));
-    assertNotNull(piles.getPile(3));
-    assertNotNull(piles.getPile(4));
-    assertNotNull(piles.getPile(5));
-    assertNotNull(piles.getPile(6));
+    
   }
 
   @Test
