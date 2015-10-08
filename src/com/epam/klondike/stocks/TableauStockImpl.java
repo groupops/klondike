@@ -12,7 +12,8 @@ import com.epam.exeptions.UnpossibleMoveException;
 public class TableauStockImpl implements TableauStock {
 
     private Stack<Card> cards = new Stack<Card>();
-
+    private boolean ready;
+    
     @Override
     public Card getCard() throws UnpossibleMoveException {
         if (cards.size() == 0)
@@ -78,7 +79,7 @@ public class TableauStockImpl implements TableauStock {
     private void validateAddMany(Queue<Card> cards) throws UnpossibleMoveException {
 
         Color matchingColor = cards.peek().getColor();
-        if (this.cards.size() == 0 && cards.peek().getRank().equals(Rank.KING))
+        if (this.cards.size() == 0 && !cards.peek().getRank().equals(Rank.KING))
             throw new UnpossibleMoveException(
                     "Can't put cards with: " + cards.peek() + " on the bottom. Only " + Rank.KING + " is allowed.");
         else if (this.cards.size() != 0) {
@@ -106,14 +107,20 @@ public class TableauStockImpl implements TableauStock {
     }
 
     private void validatePut(Card card) throws UnpossibleMoveException {
-        if (cards.size() == 0)
-            return;
-        else if (!cards.peek().getColor().equals(card.getColor()))
+        if (ready && this.cards.size() == 0 && !card.getRank().equals(Rank.KING))
+            throw new UnpossibleMoveException(
+                    "Can't put cards with: " + card + " on the bottom. Only " + Rank.KING + " is allowed.");
+        if (ready && !cards.peek().getColor().equals(card.getColor()))
             throw new UnpossibleMoveException(
                     "Can't place: " + card + " on Foundation card: " + cards.peek() + "wrong color.");
-        else if (cards.peek().getRank().ordinal() - card.getRank().ordinal() != 1)
+        else if (ready && cards.peek().getRank().ordinal() - card.getRank().ordinal() != 1)
             throw new UnpossibleMoveException("Can't place: " + card + " on Foundation card: " + cards.peek()
                     + "Must be: " + Rank.values()[cards.peek().getRank().ordinal() + 1]);
+    }
+
+    @Override
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }

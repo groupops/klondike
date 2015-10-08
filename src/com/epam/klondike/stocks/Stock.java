@@ -9,4 +9,5 @@ public interface Stock {
     Card peekCard() throws UnpossibleMoveException;
     void putCard(Card card) throws UnpossibleMoveException;
     int size();
+    void setReady(boolean ready);
 }

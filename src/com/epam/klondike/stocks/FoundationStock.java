@@ -9,7 +9,8 @@ import com.epam.exeptions.UnpossibleMoveException;
 public class FoundationStock implements Stock {
 
     private Stack<Card> cards = new Stack<Card>();
-
+    private boolean ready;
+    
     @Override
     public Card getCard() {
         return cards.pop();
@@ -40,6 +41,11 @@ public class FoundationStock implements Stock {
     @Override
     public Card peekCard() {
         return cards.peek();
+    }
+
+    @Override
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }

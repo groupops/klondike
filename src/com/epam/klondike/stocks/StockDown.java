@@ -8,7 +8,8 @@ import com.epam.exeptions.UnpossibleMoveException;
 public class StockDown implements Stock {
 
     private Stack<Card> cards = new Stack<Card>();
-
+    private boolean ready; 
+    
     @Override
     public Card getCard() throws UnpossibleMoveException {
         if (cards.size() == 0)
@@ -16,15 +17,15 @@ public class StockDown implements Stock {
         return cards.pop();
     }
 
-    public void addCard(Card card) throws UnpossibleMoveException {
+    public void putCard(Card card) throws UnpossibleMoveException {
         card.setFaceUp(false);
         validatePut(card);
-            cards.push(card);
+        cards.push(card);
     }
 
     private void validatePut(Card card) throws UnpossibleMoveException {
-        if (card.isFaceUp())
-            throw new UnpossibleMoveException("Can't place: " + card + " on StockDown because it has to be faceDown");
+        if (ready)
+            throw new UnpossibleMoveException("You can't add cards to stockDown");
     }
 
     @Override
@@ -33,13 +34,13 @@ public class StockDown implements Stock {
     }
 
     @Override
-    public Card peekCard() throws UnpossibleMoveException{
+    public Card peekCard() throws UnpossibleMoveException {
         throw new UnpossibleMoveException("You can't peek this stock, you little cheater:)");
     }
 
     @Override
-    public void putCard(Card card) throws UnpossibleMoveException {
-        throw new UnpossibleMoveException("You can't add card to stockDown");
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }

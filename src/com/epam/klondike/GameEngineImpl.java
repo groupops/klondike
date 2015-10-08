@@ -16,6 +16,7 @@ import com.epam.klondike.stocks.Stock;
 import com.epam.klondike.stocks.StockDown;
 import com.epam.klondike.stocks.StockUp;
 import com.epam.klondike.stocks.TableauStock;
+import com.epam.klondike.stocks.TableauStockImpl;
 
 public class GameEngineImpl implements GameEngine {
 
@@ -57,21 +58,26 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public void resetStockDown() throws UnpossibleMoveException {
+        gameTable.stockDown.setReady(false);
         for(int i=0; i<gameTable.stockUp.size(); i++)
-            ((StockDown)gameTable.stockDown).addCard(gameTable.stockUp.getCard());
+            ((StockDown)gameTable.stockDown).putCard(gameTable.stockUp.getCard());
+        gameTable.stockDown.setReady(true);
     }
 
     private void generateStocks() {
         gameTable.stockDown = new StockDown();
         gameTable.stockUp = new StockUp();
+        gameTable.stockUp.setReady(true);
         
         gameTable.foundationStocks = new Stock[4];
         gameTable.tableauStocks = new Stock[7];
         
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++){
             gameTable.foundationStocks[i] = new FoundationStock();
+            gameTable.foundationStocks[i].setReady(true);
+        }
         for (int i = 0; i < 7; i++)
-            gameTable.tableauStocks[i] = new FoundationStock();
+            gameTable.tableauStocks[i] = new TableauStockImpl();
     }
 
     private Stack<Card> generateDeck() {
@@ -100,6 +106,7 @@ public class GameEngineImpl implements GameEngine {
                     LOGGER.log(Level.SEVERE, "Unpossible move during shuffle");
                 }
             }
+            stock.setReady(true);
         }
         
         for(Card card : cards){
@@ -107,14 +114,15 @@ public class GameEngineImpl implements GameEngine {
                 gameTable.stockDown.putCard(card);
             } catch (UnpossibleMoveException e) {
                 LOGGER.log(Level.SEVERE, "Unpossible move during shuffle");
-            }
+            } 
         }
+        gameTable.stockDown.setReady(true);
     }
 
     private void checkIfWon() throws EndOfGameException {
         for(Stock stock : gameTable.foundationStocks){
             if(stock.size() != 13)
-                break;
+                return;
         }
         throw new EndOfGameException("CONGRATULATIONS! YOU WON!");
     }

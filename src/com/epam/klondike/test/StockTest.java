@@ -1,19 +1,15 @@
 package com.epam.klondike.test;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import com.epam.card.Card;
-import com.epam.card.Color;
-import com.epam.card.Rank;
 import com.epam.exeptions.EndOfGameException;
 import com.epam.exeptions.UnpossibleMoveException;
 import com.epam.klondike.GameEngine;
 import com.epam.klondike.GameEngineImpl;
 import com.epam.klondike.GameTable;
-import com.epam.klondike.stocks.Stock;
-import com.epam.klondike.stocks.StockUp;
 
 public class StockTest {
     
@@ -29,8 +25,16 @@ public class StockTest {
     
     
     @Test
-    public void addToStockUp() throws UnpossibleMoveException, EndOfGameException{
+    public void printState() throws UnpossibleMoveException, EndOfGameException{
+        System.out.println(gameTable.getState());
+    }
+    
+    @Test
+    public void moveFromStockDownToStockUp() throws UnpossibleMoveException, EndOfGameException{
+        int stockDownSize = gameTable.stockDown.size();
         gameEngine.moveCard(gameTable.stockDown, gameTable.stockUp);
+        assertEquals(1, gameTable.stockUp.size());
+        assertEquals(stockDownSize-1, gameTable.stockDown.size());
     }
     
 }

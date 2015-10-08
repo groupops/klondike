@@ -8,6 +8,7 @@ import com.epam.exeptions.UnpossibleMoveException;
 public class StockUp implements Stock {
 
     private Stack<Card> cards = new Stack<Card>();
+    private boolean ready;
 
     @Override
     public Card getCard() throws UnpossibleMoveException {
@@ -38,6 +39,11 @@ public class StockUp implements Stock {
         if (cards.size() == 0)
             throw new UnpossibleMoveException("The stock is empty");
         return cards.peek();
+    }
+
+    @Override
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }
