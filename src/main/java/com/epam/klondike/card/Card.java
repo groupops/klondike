@@ -24,7 +24,7 @@ public class Card {
     return isFaceUp;
   }
 
-  public void setIsFaceUp(boolean isFaceUp) {
+  public void setFaceUp(boolean isFaceUp) {
     this.isFaceUp = isFaceUp;
   }
 
@@ -35,8 +35,7 @@ public class Card {
 
     Card card = (Card) o;
 
-    return isFaceUp == card.isFaceUp && COLOR == card.COLOR &&
-        SYMBOL == card.SYMBOL;
+    return COLOR == card.COLOR && SYMBOL == card.SYMBOL;
 
   }
 
@@ -53,7 +52,6 @@ public class Card {
     return "Card{" +
         "COLOR=" + COLOR +
         ", SYMBOL=" + SYMBOL +
-        ", isFaceUp=" + isFaceUp +
         '}';
   }
 }

@@ -6,11 +6,11 @@ import java.util.List;
 public class Piles {
 
   private List<Pile> piles;
-  private int NUMBER_OF_PILES = 7;
+  private int numberOfPiles = 7;
 
   public Piles() {
-    piles = new ArrayList<>(NUMBER_OF_PILES);
-    for (int i = 0; i < NUMBER_OF_PILES; i++){
+    piles = new ArrayList<>(numberOfPiles);
+    for (int i = 0; i < numberOfPiles; i++){
       Pile pile = new Pile();
       piles.add(pile);
     }
@@ -23,7 +23,7 @@ public class Piles {
 
     Piles piles1 = (Piles) o;
 
-    return NUMBER_OF_PILES == piles1.NUMBER_OF_PILES &&
+    return numberOfPiles == piles1.numberOfPiles &&
         !(piles != null ? !piles.equals(piles1.piles) : piles1.piles != null);
 
   }
@@ -31,7 +31,7 @@ public class Piles {
   @Override
   public int hashCode() {
     int result = piles != null ? piles.hashCode() : 0;
-    result = 31 * result + NUMBER_OF_PILES;
+    result = 31 * result + numberOfPiles;
     return result;
   }
 
@@ -39,16 +39,16 @@ public class Piles {
   public String toString() {
     return "Piles{" +
         "piles=" + piles +
-        ", NUMBER_OF_PILES=" + NUMBER_OF_PILES +
+        ", numberOfPiles=" + numberOfPiles +
         '}';
   }
 
   public int getNumberOfPiles() {
-    return NUMBER_OF_PILES;
+    return numberOfPiles;
   }
 
-  public void setNumberOfPiles(int numberOfPiles){
-    this.NUMBER_OF_PILES = numberOfPiles;
+  private void setNumberOfPiles(int numberOfPiles){
+    this.numberOfPiles = numberOfPiles;
   }
 
   public Pile getPile(int number){

@@ -8,6 +8,8 @@ import java.util.*;
 
 public class DeckOfCards {
 
+  public static final int NUMBER_OF_SYMBOLS = 13;
+  public static final int NUMBER_OF_COLORS = 4;
   private Deque<Card> deck;
   private Piles piles;
 
@@ -18,10 +20,10 @@ public class DeckOfCards {
 
   public DeckOfCards(Piles piles) {
     this.deck = new ArrayDeque<>();
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < NUMBER_OF_SYMBOLS; i++) {
       Symbol symbol = Symbol.values()[i];
 
-      for (int j = 0; j < 4; j++) {
+      for (int j = 0; j < NUMBER_OF_COLORS; j++) {
         Card card = new Card(Color.values()[j], symbol, false);
         this.deck.add(card);
       }
@@ -55,7 +57,11 @@ public class DeckOfCards {
         '}';
   }
 
-  public Deque<Card> shuffle() {
+  public Pile getPile(int numberOfPile){
+    return piles.getPile(numberOfPile);
+  }
+
+  public Deque<Card> getShuffledDeck() {
     List<Card> deckAsList = new LinkedList<>(deck);
     Collections.shuffle(deckAsList);
     return new ArrayDeque<>(deckAsList);
@@ -65,9 +71,14 @@ public class DeckOfCards {
     piles = new Piles();
     for (int i = 0; i < piles.getNumberOfPiles(); i++) {
       Pile pile = piles.getPile(i);
-      Card card = deck.getFirst();
-      pile.add(card);
-      deck.removeFirst();
+      for (int j = 0; j < i + 1; j++) {
+        Card card = deck.getFirst();
+        pile.putOneCard(card);
+        if(j == i){
+          card.setFaceUp(true);
+        }
+        deck.removeFirst();
+      }
     }
   }
 
